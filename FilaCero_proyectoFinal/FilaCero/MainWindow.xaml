@@ -1,0 +1,185 @@
+<Window x:Class="FilaCero.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="FilaCero" Height="680" Width="1000" MinWidth="900" MinHeight="600"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource FondoPrincipal}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Cabecera -->
+        <Border Grid.Row="0" Background="{StaticResource FondoDegradado}" Padding="28,16">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="14" ShadowDepth="2" Opacity="0.25" Color="#0F172A"/>
+            </Border.Effect>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Image Source="{StaticResource IconoFila}" Height="34" Margin="0,0,14,0"/>
+                    <StackPanel>
+                        <TextBlock Text="FilaCero" FontSize="26" FontWeight="Bold" Foreground="White"/>
+                        <TextBlock Text="Gestión de turnos virtuales" FontSize="13" Foreground="#CCFBF1"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Style="{StaticResource Chip}">
+                        <StackPanel>
+                            <TextBlock x:Name="lblPendientes" Text="0" FontSize="20" FontWeight="Bold"
+                                       Foreground="White" HorizontalAlignment="Center"/>
+                            <TextBlock Text="PENDIENTES" FontSize="10" Foreground="#CCFBF1" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource Chip}">
+                        <StackPanel>
+                            <TextBlock x:Name="lblAtendiendo" Text="0" FontSize="20" FontWeight="Bold"
+                                       Foreground="White" HorizontalAlignment="Center"/>
+                            <TextBlock Text="ATENDIENDO" FontSize="10" Foreground="#CCFBF1" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <Button x:Name="btnSalir" Click="btnSalir_Click"
+                            Style="{StaticResource BtnCabecera}" Margin="6,0,0,0">
+                        <StackPanel Orientation="Horizontal">
+                            <Path Style="{StaticResource Icono}" Data="M10,5 H6 V19 H10 M14,8 L18,12 L14,16 M18,12 H9"/>
+                            <TextBlock Text="Cerrar sesión"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1" Margin="24">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Tarjeta: nuevo turno -->
+            <Border Grid.Row="0" Background="White" CornerRadius="12" Padding="20" Margin="0,0,0,16"
+                    Effect="{StaticResource SombraTarjeta}">
+                <StackPanel>
+                    <TextBlock Text="Nuevo turno" FontSize="16" FontWeight="Bold"
+                               Foreground="{StaticResource Navy}" Margin="0,0,0,12"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="1.2*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Margin="0,0,14,0">
+                            <TextBlock Text="NOMBRE DEL USUARIO" Style="{StaticResource Etiqueta}"/>
+                            <TextBox x:Name="txtNombre" Margin="0,0,0,10"/>
+                            <TextBlock Text="TELÉFONO" Style="{StaticResource Etiqueta}"/>
+                            <TextBox x:Name="txtTelefono"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Margin="0,0,14,0">
+                            <TextBlock Text="ESTABLECIMIENTO" Style="{StaticResource Etiqueta}"/>
+                            <ComboBox x:Name="cmbEstablecimiento" SelectionChanged="cmbEstablecimiento_SelectionChanged"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2" Margin="0,0,14,0">
+                            <TextBlock Text="SERVICIO" Style="{StaticResource Etiqueta}"/>
+                            <ComboBox x:Name="cmbServicio" SelectionChanged="cmbServicio_SelectionChanged"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="3">
+                            <TextBlock Text="INFORMACIÓN" Style="{StaticResource Etiqueta}"/>
+                            <Border Background="{StaticResource Fondo}" CornerRadius="8" Padding="10,8">
+                                <TextBlock x:Name="lblInformacion" Text="Seleccione un servicio"
+                                           TextWrapping="Wrap" Foreground="{StaticResource TextoSuave}"/>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Botones de acción -->
+            <WrapPanel Grid.Row="1" Margin="0,0,0,16">
+                <Button x:Name="btnTomarTurno" Click="btnTomarTurno_Click" Style="{StaticResource BtnPrimario}">
+                    <StackPanel Orientation="Horizontal">
+                        <Path Style="{StaticResource Icono}" Data="M12,5 V19 M5,12 H19"/>
+                        <TextBlock Text="Tomar turno"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnSiguiente" Click="btnSiguiente_Click" Style="{StaticResource BtnDestacado}">
+                    <StackPanel Orientation="Horizontal">
+                        <Path Style="{StaticResource Icono}" Data="M8,5 L19,12 L8,19 Z"/>
+                        <TextBlock Text="Llamar siguiente"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnAtender" Click="btnAtender_Click" Style="{StaticResource BtnExito}">
+                    <StackPanel Orientation="Horizontal">
+                        <Path Style="{StaticResource Icono}" Data="M5,12.5 L10,17.5 L19,7"/>
+                        <TextBlock Text="Marcar atendido"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnCancelar" Click="btnCancelar_Click" Style="{StaticResource BtnPeligro}">
+                    <StackPanel Orientation="Horizontal">
+                        <Path Style="{StaticResource Icono}" Data="M6,6 L18,18 M18,6 L6,18"/>
+                        <TextBlock Text="Cancelar turno"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnRecargar" Click="btnRecargar_Click" Style="{StaticResource BtnSecundario}">
+                    <StackPanel Orientation="Horizontal">
+                        <Path Style="{StaticResource Icono}" Data="M19,12 A7,7 0 1 1 16.5,6.6 M16.8,3 V7 H12.8"/>
+                        <TextBlock Text="Recargar"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnExportar" Click="btnExportar_Click" Style="{StaticResource BtnSecundario}">
+                    <StackPanel Orientation="Horizontal">
+                        <Path Style="{StaticResource Icono}" Data="M12,4 V15 M7,10.5 L12,15.5 L17,10.5 M5,20 H19"/>
+                        <TextBlock Text="Exportar CSV"/>
+                    </StackPanel>
+                </Button>
+                <TextBox x:Name="txtBuscar" Width="230" Height="38" VerticalContentAlignment="Center"
+                         ToolTip="Buscar por nombre, turno, servicio o establecimiento"
+                         TextChanged="txtBuscar_TextChanged"/>
+            </WrapPanel>
+
+            <!-- Tabla de turnos -->
+            <Border Grid.Row="2" Background="White" CornerRadius="12" Padding="4"
+                    Effect="{StaticResource SombraTarjeta}">
+                <DataGrid x:Name="dgTurnos" AutoGenerateColumns="False" IsReadOnly="True"
+                          CanUserAddRows="False" SelectionMode="Single"
+                          SelectionChanged="dgTurnos_SelectionChanged"
+                          BorderThickness="0" Background="White"
+                          RowBackground="White" AlternatingRowBackground="#F8FAFC"
+                          GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#E2E8F0"
+                          HeadersVisibility="Column" RowHeight="38"
+                          ColumnHeaderStyle="{StaticResource EncabezadoTabla}"
+                          CellStyle="{StaticResource CeldaTabla}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" Binding="{Binding id}" Width="55" ElementStyle="{StaticResource CeldaTexto}"/>
+                        <DataGridTextColumn Header="Turno" Binding="{Binding codigo}" Width="80" ElementStyle="{StaticResource CeldaTexto}"/>
+                        <DataGridTextColumn Header="Usuario" Binding="{Binding usuario}" Width="*" ElementStyle="{StaticResource CeldaTexto}"/>
+                        <DataGridTextColumn Header="Establecimiento" Binding="{Binding establecimiento}" Width="*" ElementStyle="{StaticResource CeldaTexto}"/>
+                        <DataGridTextColumn Header="Servicio" Binding="{Binding servicio}" Width="*" ElementStyle="{StaticResource CeldaTexto}"/>
+                        <DataGridTextColumn Header="Personas delante" Binding="{Binding personas_delante}" Width="120" ElementStyle="{StaticResource CeldaTexto}"/>
+                        <DataGridTextColumn Header="Espera (min)" Binding="{Binding espera_minutos}" Width="100" ElementStyle="{StaticResource CeldaTexto}"/>
+                        <DataGridTemplateColumn Header="Estado" Width="120">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Border Style="{StaticResource Pastilla}">
+                                        <TextBlock Text="{Binding estado}" FontSize="12" FontWeight="SemiBold"/>
+                                    </Border>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>
